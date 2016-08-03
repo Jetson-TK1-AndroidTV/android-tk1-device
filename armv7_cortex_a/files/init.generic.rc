@@ -1,0 +1,111 @@
+import /init.${ro.hardware}.rc
+
+on early-init
+    mount debugfs debugfs /sys/kernel/debug
+
+    mkdir /pds 0777 system system
+
+    setprop wifi.interface "wlan0"
+    setprop wlan.driver.status "ok"
+
+    #setprop service.adb.tcp.port 5555
+
+on init
+    symlink /sdcard /mnt/sdcard
+    symlink /sdcard /storage/sdcard
+
+    # USB Drive
+    #mkdir /mnt/media_rw/usbdisk 0700 media_rw media_rw
+    #mkdir /storage/usbdisk 0700 root root
+    symlink /usbdisk /mnt/sbdisk
+    symlink /usbdisk /storage/usbdisk
+
+    # SD Card
+    #mkdir /mnt/media_rw/sdcard2 0700 media_rw media_rw
+    #mkdir /storage/sdcard2 0700 root root
+    symlink /sdcard2 /mnt/sdcard2
+    symlink /sdcard2 /storage/sdcard2
+
+    mkdir /cache 0700 root root
+
+    # backlight permissions
+    chown system system /sys/class/backlight/pwm-backlight/brightness
+    chown system system /sys/class/backlight/pwm-backlight/max_brightness
+    chmod 664 /sys/class/backlight/pwm-backlight/brightness
+    chmod 444 /sys/class/backlight/pwm-backlight/max_brightness
+
+    chmod 644 /dev/rfkill
+    chown wifi root /dev/rfkill
+
+on fs
+    setprop ro.crypto.umount_sd false
+    # setprop ro.crypto.fuse_sdcard true
+    mount_all /fstab.generic
+
+on post-fs-data
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    mkdir /data/cache 0700 root root
+    chown dhcp dhcp /data/misc/dhcp
+
+    # mkdir /data/media 0770 media_rw media_rw
+    chmod 755 /data
+    chmod 755 /data/system
+    chmod 755 /data/system/users
+    chmod 755 /data/system/users/0
+    chmod 755 /data/system/users/0/wallpaper_info.xml
+
+    # Set indication (checked by vold) that we have finished this action
+    setprop vold.post_fs_data_done 1
+
+on boot
+    write /sys/class/android_usb/android0/iSerial ${ro.serialno}
+    start vendor
+
+service vendor /system/bin/sh /system/vendor/vendor.sh
+    user root
+    group root
+    oneshot
+
+service wpa_supplicant /system/bin/wpa_supplicant \
+    -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
+    -I/system/etc/wifi/wpa_supplicant_overlay.conf \
+    -e/data/misc/wifi/entropy.bin -g@android:wpa_wlan0
+    # we will start as root and wpa_supplicant will switch to user wifi
+    # after setting up the capabilities required for WEXT
+    # user wifi
+    # group wifi inet keystore
+    class main
+    socket wpa_wlan0 dgram 660 wifi wifi
+    disabled
+    oneshot
+
+
+service dhcpcd_wlan0 /system/bin/dhcpcd -aABKL
+    class main
+    disabled
+    oneshot
+
+service dhcpcd_p2p /system/bin/dhcpcd -aABKL
+    class main
+    disabled
+    oneshot
+
+service dhcpcd_eth0 /system/bin/dhcpcd -ABKL
+    class main
+    disabled
+    oneshot
+
+service iprenew_wlan0 /system/bin/dhcpcd -n
+    disabled
+    oneshot
+
+service iprenew_p2p /system/bin/dhcpcd -n
+    disabled
+    oneshot
+
+service iprenew_eth0 /system/bin/dhcpcd -n
+    disabled
+    oneshot
+

@@ -1,0 +1,5 @@
+# Permanent storage
+#<src>                   <mnt_point>        <type>  <mnt_flags and options>                         <fs_mgr_flags>
+/dev/block/sda2     /system            ext4    ro                                              wait
+/dev/block/sda3     /data              ext4    noatime,nosuid,nodev,barrier=1,data=ordered     wait,check,encryptable=footer
+

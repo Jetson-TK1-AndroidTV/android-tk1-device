@@ -1,0 +1,2 @@
+add_lunch_combo tegrak1-eng
+add_lunch_combo tegrak1-userdebug
