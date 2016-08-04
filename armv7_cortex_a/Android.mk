@@ -2,6 +2,6 @@ ifdef ARMV7_CORTEX_A_BOARD
 
 LOCAL_PATH := $(call my-dir)
 
-include $(call all-makefiles-under,$(LOCAL_PATH))
+include $(all-subdir-makefiles)
 
 endif
