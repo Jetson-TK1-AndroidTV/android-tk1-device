@@ -1,4 +1,4 @@
-import /init.${ro.hardware}.rc
+import /init.tegra.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug

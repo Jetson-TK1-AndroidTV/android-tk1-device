@@ -1,5 +1,5 @@
 # Removable storage
 #<src>                                          <mnt_point> <type>  <mnt_flags and options>                         <fs_mgr_flags>
-/devices/platform/tegra-ehci.*                  auto        auto    defaults                                        voldmanaged=usbdisk:auto
-/devices/platform/sdhci-tegra.*                 auto        auto    defaults                                        voldmanaged=sdcard2:auto
-/devices/platform/tegra-sata.0/*                auto        auto    defaults                                        voldmanaged=sata:auto
+#/devices/platform/tegra-ehci.*                  auto        auto    defaults                                        voldmanaged=usbdisk:auto
+#/devices/platform/sdhci-tegra.*                 auto        auto    defaults                                        voldmanaged=sdcard2:auto
+#/devices/platform/tegra-sata.0/*                auto        auto    defaults                                        voldmanaged=sata:auto
