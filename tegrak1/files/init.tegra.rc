@@ -1,4 +1,4 @@
-import init.tegra.usb.rc
+import /init.tegra.usb.rc
 
 on early-init
     setprop persist.sys.display.resolution "1920x1080"

@@ -12,8 +12,8 @@ TARGET_BOOTLOADER_TYPE := fastboot
 BOARD_KERNEL_CMDLINE := androidboot.hardware=generic
 TARGET_KERNEL_SOURCE := kernel/tegra
 TARGET_KERNEL_CONFIG :=  tegra12_jetson_android_defconfig
-KERNEL_TOOLCHAIN_PREFIX := arm-linux-gnueabihf-
-KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-linux-gnueabihf-linaro-4.9/bin
+KERNEL_TOOLCHAIN_PREFIX := arm-linux-gnueabi-
+KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-linux-gnueabi-4.9-linaro/bin
 
 TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
@@ -52,7 +52,8 @@ BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_FLASH_BLOCK_SIZE := 4096
 
 BOARD_HAVE_BLUETOOTH := false
-BOARD_USES_GENERIC_AUDIO := true
+BOARD_USES_GENERIC_AUDIO := false
+BOARD_USES_ALSA_AUDIO := true
 
 # Wifi
 WPA_SUPPLICANT_VERSION := VER_0_8_X

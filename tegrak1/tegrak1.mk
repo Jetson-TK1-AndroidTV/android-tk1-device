@@ -19,6 +19,7 @@ $(call inherit-product, device/antmicro/armv7_cortex_a/armv7_cortex_a.mk)
 
 PRODUCT_COPY_FILES += device/antmicro/tegrak1/files/fstab.tegra:root/fstab.tegra
 PRODUCT_COPY_FILES += device/antmicro/tegrak1/files/init.tegra.rc:root/init.tegra.rc
+PRODUCT_COPY_FILES += device/antmicro/tegrak1/files/init.tegra_emmc.rc:root/init.tegra_emmc.rc
 PRODUCT_COPY_FILES += device/antmicro/tegrak1/files/ueventd.tegra.rc:root/ueventd.tegra.rc
 PRODUCT_COPY_FILES += device/antmicro/tegrak1/files/init.tegra.usb.rc:root/init.tegra.usb.rc
 PRODUCT_COPY_FILES += device/antmicro/tegrak1/files/media_codecs.xml:system/etc/media_codecs.xml
